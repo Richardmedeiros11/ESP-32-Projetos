@@ -32,7 +32,7 @@ Dentro deste objeto temos varias funções
  - `setTextSize(size)`: Define o tamanho do texto (lembre-se que uma linha pode sobrepor a outra, então use o setCursor com sabedoria)
  - ``println("Texto")``: Define o texto a ser exibido com as configurações anteriores
 Veja um exemplo:
-```
+```ino
 #include "SPI.h"
 #include "Adafruit_GFX.h"
 #include "Adafruit_ILI9341.h"
