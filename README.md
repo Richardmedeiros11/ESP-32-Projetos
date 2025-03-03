@@ -61,3 +61,58 @@ ESP-32 de 38 pinos
 | **GPIO 25** | ADC2_CH8 | Conflito com Wi-Fi |
 | **GPIO 26** | ADC2_CH9 | Conflito com Wi-Fi |
 | **GPIO 27** | ADC2_CH7 | Conflito com Wi-Fi |
+
+ - Pinos TOUCH: O ESP32 de 38 pinos possui 10 pinos touch capacitivos, que podem ser usados para detectar variações de capacitância ao tocar com o dedo ou aproximar um objeto condutivo. Esses pinos são úteis para criar botões sensíveis ao toque, sensores de proximidade ou detecção de líquidos.
+
+| **GPIO** | **Canal Touch (constante do pino)** | **Observações** |
+|---------|----------------|----------------|
+| **GPIO 4**  | T0  | Pode ser usado livremente |
+| **GPIO 0**  | T1  | ⚠️ Boot falha se estiver em LOW |
+| **GPIO 2**  | T2  | ⚠️ Necessário estar em LOW para boot correto |
+| **GPIO 15** | T3  | Pode ser usado |
+| **GPIO 13** | T4  | Pode ser usado |
+| **GPIO 12** | T5  | ⚠️ Boot falha se estiver em HIGH |
+| **GPIO 14** | T6  | Pode ser usado |
+| **GPIO 27** | T7  | Pode ser usado |
+| **GPIO 33** | T8  | Apenas entrada (não pode ser saída digital) |
+| **GPIO 32** | T9  | Apenas entrada (não pode ser saída digital) |
+
+Para usar esses pinos para a função TOUCH, temos que usar elas no codico com a constante do pino (não é necessario usar o pinMode), para indentificar o input basta usar a função `touchRead(PINO)`, exemplo:
+```ino
+const byte TOUCH_PIN = T0  // GPIO 4
+
+void setup() {
+  Serial.begin(115200);
+}
+
+void loop() {
+  int touchValue = touchRead(TOUCH_PIN);  // Lê o valor do sensor
+  Serial.println(touchValue);  // Exibe o valor no monitor serial
+  delay(200);
+}
+```
+ - Pinos DAC: O ESP32 possui dois conversores digital-analógico (DAC) embutidos, que permitem gerar tensões analógicas variáveis diretamente nos pinos. Isso é útil para geração de sinais de áudio, controle de brilho em LEDs, acionamento de motores e outras aplicações analógicas.
+
+| **GPIO** | **Canal DAC** | **Faixa de Saída** | **Observações** |
+|---------|---------------|--------------------|----------------|
+| **GPIO 25** | DAC1 | 0V - 3.3V | Pode ser usado livremente |
+| **GPIO 26** | DAC2 | 0V - 3.3V | Pode ser usado livremente |
+
+Para aplicar a faixa de tensão no pino, temos de usar a função `dacWrite(pino, tensão)`, aonde a tensão em 3.3V varia de 0 a 255
+```ino
+#define DAC_PIN 25
+void setup() {
+ Serial.begin(9600);
+}
+void loop() {
+ for(int i = 0; i <= 255; i++){
+  Serial.println(i);
+  dacWrite(DAC_PIN, i);
+  delay(10); 
+ }
+}
+```
+aonde vai sair uma tensão de aproximadamente
+ - 0 → 0V
+ - 128 → 1.65V
+ - 255 → 3.3V
