@@ -1,4 +1,6 @@
 # Tela ILI 9341
+![image](https://github.com/user-attachments/assets/96cb5b13-a324-4982-90ad-dc0e39c1d95e)
+
 ### Pinagem (segundo o codigo exemplo):
  - VCC: Ligar ao 5V
  - GND: Ligar ao GND
